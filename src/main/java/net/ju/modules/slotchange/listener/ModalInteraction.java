@@ -1,11 +1,11 @@
-package net.ju.listener;
+package net.ju.modules.slotchange.listener;
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
-public class ModalInteractionEvent extends ListenerAdapter {
+public class ModalInteraction extends ListenerAdapter {
 
     @Override
     public void onModalInteraction(net.dv8tion.jda.api.events.interaction.ModalInteractionEvent event){
@@ -15,11 +15,11 @@ public class ModalInteractionEvent extends ListenerAdapter {
                 if(count.equals("1")) return;
 
                 if(!isNumeric(count)) {
-                    event.reply("Sicher, dass es eine Nummer war, die du eingegeben hast?").setEphemeral(true).queue();
+                    event.reply("You're sure you've provided me with a number?").setEphemeral(true).queue();
                     return;
                 }
 
-                event.getMember().getVoiceState().getChannel().asVoiceChannel().getManager().setUserLimit(Integer.parseInt(count)).and(event.reply("Erfolgreich!").setEphemeral(true)).queue();
+                event.getMember().getVoiceState().getChannel().asVoiceChannel().getManager().setUserLimit(Integer.parseInt(count)).and(event.reply("Successful!").setEphemeral(true)).queue();
 
         }
     }

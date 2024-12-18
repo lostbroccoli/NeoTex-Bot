@@ -1,0 +1,27 @@
+version: '3'
+services:
+    discord-bot:
+        build: .
+        container_name: lighty-dcbot # Customize the name if u want a specific name for the container.
+        restart: always
+    mongo:
+      image: mongo
+      restart: always
+      container_name: lighty-db
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: yourusername # also used in the MONGODB_URL
+        MONGO_INITDB_ROOT_PASSWORD: yourpassword # also used in the MONGODB_URL
+
+# Additional Webinterface for managing the database itself (NOT NEEDED!)
+    mongo-express:
+      image: mongo-express
+      restart: always
+      container_name: lighty-dbpanel # Customize the name if u want a specific name for the container.
+      ports:
+        - 8080:8081 # Be REALLY careful what ports you make public! I recommend setting up a VPN and binding the port on the VPN Address. Example: 10.8.0.1:8080:8081. (Leave the 8081, otherwise it wont function)
+      environment:
+        ME_CONFIG_MONGODB_ADMINUSERNAME: yoursecondusername # username for the webinterface
+        ME_CONFIG_MONGODB_ADMINPASSWORD: yoursecondpassword # password for the webinterface
+        ME_CONFIG_MONGODB_URL: "mongodb://YOURUSERNAME:YOURPASSWORD@discord-bot:27017/"
+        ME_CONFIG_BASICAUTH: false # setup to true if you want to login into your webinterface. (FALSE just logs you in)
+
